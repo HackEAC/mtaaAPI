@@ -10,6 +10,8 @@ flask-cors = "*"
 flask-graphql = "*"
 graphene = ">=2.0"
 gunicorn = "*"
+markdown = "*"
+pygments = "*"
 
 [dev-packages]
 

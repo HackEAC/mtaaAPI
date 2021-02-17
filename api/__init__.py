@@ -1,9 +1,14 @@
+from os import system, urandom, path, getcwd
 from flask import Flask
 from flask_cors import CORS
 from flask_graphql import GraphQLView
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,
+        template_folder=path.join(getcwd(), "templates"),
+        static_folder=path.join(getcwd(), "static")
+    )
+    app.config['SECRET_KEY'] = urandom(64)
 
     CORS(app)
 
@@ -19,6 +24,13 @@ def create_app():
             batch=True
         )
     )
+
+    # system('rm static/*.css')
+    # system('mv templates/README.html templates/index.html')
+
+    # system('generate-md --layout jasonm23-dark --input README.md --output templates')
+    # system('mv templates/assets/* static/')
+    # system('rm -rf templates/assets')
     
     with app.app_context():
         from . import routes

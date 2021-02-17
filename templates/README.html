@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mtaa API</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='pilcrow.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='hljs-github.min.css') }}"
+    />
+  </head>
+  <body>
+    <h1 id="mtaa-api"><a class="header-link" href="#mtaa-api"></a>Mtaa API</h1>
+    <p>
+      <a href="https://mtaa-api.herokuapp.com">Mtaa API</a> is a simple REST(And
+      later GraphQL) API for accessing Tanzania locations.
+    </p>
+    <p>
+      Mtaa API is powered by <a href="https://github.com/Kalebu/mtaa">mtaa</a>.
+    </p>
+    <h2 id="why"><a class="header-link" href="#why"></a>Why?</h2>
+    <p>
+      Most of the time when coding, we found ourselves in need of some location
+      data, especially for our country,
+      <a href="https://en.wikipedia.org/wiki/Tanzania">Tanzania</a>.
+    </p>
+    <p>
+      We didn&#39;t like the idea of scraping some public sites because we had
+      the feeling that we was spending more time understanding the site and
+      cleaning the data than focusing on my task.
+    </p>
+    <p>
+      But we liked the idea of a public API for developers. So I decided to code
+      a little Flask server inspired by our
+      <a href="https://github.com/HackEAC/tanzania-locations-db"
+        >tanzania-locations-db</a
+      >, <a href="https://github.com/Kalebu/mtaa">mtaa</a> and here is Mtaa API.
+    </p>
+    <p>
+      You can find it running here and are free to use it in your developments:
+      <a href="https://mtaa-api.herokuapp.com/api"
+        >https://mtaa-api.herokuapp.com/api</a
+      >.
+    </p>
+    <p>I hope you will find it useful.</p>
+    <h2 id="features"><a class="header-link" href="#features"></a>Features</h2>
+    <ul class="list">
+      <li>No registration</li>
+      <li>Zero-config</li>
+      <li>Basic API</li>
+      <li>
+        Cross-domain (<a
+          href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing"
+          >CORS</a
+        >)
+      </li>
+      <li>Supports GET and POST(GraphQL) verbs</li>
+      <li>
+        Compatible with React, Angular, Vue, Ember, ...<!-- * HTTP or HTTPS -->
+        <!-- * "Has many" relationships -->
+        <!-- * Filters and nested resources -->
+      </li>
+    </ul>
+    <h2 id="guide"><a class="header-link" href="#guide"></a>Guide</h2>
+    <p>
+      For examples and more, documentation coming soon...
+      <!-- you can visit https://mtaa-api.herokuapp.com -->
+    </p>
+  </body>
+</html>

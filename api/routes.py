@@ -1,7 +1,16 @@
+import mtaa
 from flask import current_app as app
 from flask import jsonify, render_template
 from mtaa import tanzania
 from typing import Dict
+
+
+LEVELS = {
+    'regions': mtaa.regions,
+    'districts': mtaa.districts,
+    "wards": mtaa.wards,
+    "streets": mtaa.streets
+}
 
 
 def get_postcode(payload, level):
@@ -16,6 +25,11 @@ def home():
 @app.get('/api')
 def api():
     return render_template('index.html')
+
+
+@app.get('/api/all/<level>')
+def get_all(level):
+    return jsonify(LEVELS.get(level, {}))
 
 
 @app.get('/api/tanzania')

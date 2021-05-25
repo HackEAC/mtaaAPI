@@ -23,7 +23,7 @@ class Region(ObjectType):
 
 class Tanzania(ObjectType):
     names = List(String)
-    regions = list(tanzania.get_dict().keys())
+    regions = list(tanzania)
 
     def resolve_names(root, info):
         return root.regions
@@ -38,6 +38,7 @@ class Query(ObjectType):
 
     def resolve_hello(parent, info, name):
         return f'Hello, {name}!'
+
 
 schema = Schema(query=Query)
 # schema = Schema(query=Tanzania)

@@ -4,6 +4,10 @@ from mtaa import tanzania
 from typing import Dict
 
 
+def get_postcode(payload, level):
+    return getattr(payload, level, "")
+
+
 @app.get('/')
 def home():
     return render_template('README.html')
@@ -19,7 +23,7 @@ def tanzan():
     """
     Returns a list of all the regions in Tanzania
     """
-    return jsonify({"regions": list(tanzania.get_dict().keys())})
+    return jsonify({"regions": list(tanzania)})
 
 
 @app.get('/api/tanzania/<region>')
@@ -27,20 +31,24 @@ def regions(region: str) -> Dict:
     """
     Returns a list of all the districts in the given Region and the region's post code
     """
-    temp: str = region.lower().capitalize()
-    payload = tanzania.get_dict()[temp]
-    return jsonify({"post_code": payload.post_code if hasattr(payload, 'post_code') else 'None', "districts": list(payload.districts.get_dict().keys())})
+    region: str = region.lower().capitalize()
+    payload = tanzania.get(region)
+    postcode = get_postcode(payload, 'post_code')
+    return jsonify({"post_code": postcode, "districts": list(payload.districts)})
 
 
-@app.get('/api/tanzania/<region>/<district>')
+@ app.get('/api/tanzania/<region>/<district>')
 def districts(region: str, district: str) -> Dict:
     """
     Returns a list of all the wards in the given District and the district's post code
     """
     reg: str = region.lower().capitalize()
-    temp: str = district.lower().capitalize()
-    payload = tanzania.get_dict()[reg].districts.get_dict()[temp]
-    return jsonify({"post_code": payload.district_post_code if hasattr(payload, 'district_post_code') else 'None', "wards": list(payload.wards.get_dict().keys())})
+    dist: str = district.lower().capitalize()
+    payload = tanzania.get(reg).districts.get(dist)
+    postcode = get_postcode(payload, 'district_post_code')
+    wards = list(payload.wards)
+    wards.remove('ward_post_code')
+    return jsonify({"post_code": postcode, "wards": wards})
 
 
 @app.get('/api/tanzania/<region>/<district>/<ward>')
@@ -50,10 +58,11 @@ def wards(region: str, district: str, ward: str) -> Dict:
     """
     reg: str = region.lower().capitalize()
     dist: str = district.lower().capitalize()
-    temp: str = ward.lower().capitalize()
-    payload = tanzania.get_dict()[reg].districts.get_dict()[
-        dist].wards.get_dict()[temp]
-    return jsonify({"post_code": payload.ward_post_code if hasattr(payload, 'ward_post_code') else "None", "streets": list(payload.streets.get_dict().keys())})
+    ward: str = ward.lower().capitalize()
+    payload = tanzania.get(reg).districts.get(dist).wards.get(ward)
+    post_code = get_postcode(payload, 'ward_post_code')
+    streets = list(payload.streets)
+    return jsonify({"post_code": post_code, "streets": streets})
 
 
 @app.get('/api/tanzania/<region>/<district>/<ward>/<street>')
@@ -62,6 +71,6 @@ def streets(region: str, district: str, ward: str, street: str) -> Dict:
     dist: str = district.lower().capitalize()
     ward: str = ward.lower().capitalize()
     temp: str = street.lower().capitalize()
-    payload = tanzania.get_dict()[reg].districts.get_dict(
-    )[dist].wards.get_dict()[ward].streets.get_dict()[temp]
+    payload = tanzania.get(reg).districts.get(
+        dist).wards.get(ward).streets.get(temp)
     return jsonify({"more": payload})

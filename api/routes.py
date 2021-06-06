@@ -47,6 +47,8 @@ def regions(region: str) -> Dict:
     """
     region: str = region.lower().capitalize()
     payload = tanzania.get(region)
+    if not payload:
+        return jsonify({})
     postcode = get_postcode(payload, 'post_code')
     return jsonify({"post_code": postcode, "districts": list(payload.districts)})
 
@@ -58,11 +60,15 @@ def districts(region: str, district: str) -> Dict:
     """
     reg: str = region.lower().capitalize()
     dist: str = district.lower().capitalize()
-    payload = tanzania.get(reg).districts.get(dist)
-    postcode = get_postcode(payload, 'district_post_code')
-    wards = list(payload.wards)
-    wards.remove('ward_post_code')
-    return jsonify({"post_code": postcode, "wards": wards})
+    try:
+        payload = tanzania.get(reg).districts.get(dist)
+        postcode = get_postcode(payload, 'district_post_code')
+        wards = list(payload.wards)
+        wards.remove('ward_post_code')
+        return jsonify({"post_code": postcode, "wards": wards})
+    except Exception as bug:
+        print(bug)
+        return jsonify({})
 
 
 @app.get('/api/tanzania/<region>/<district>/<ward>')
@@ -73,10 +79,14 @@ def wards(region: str, district: str, ward: str) -> Dict:
     reg: str = region.lower().capitalize()
     dist: str = district.lower().capitalize()
     ward: str = ward.lower().capitalize()
-    payload = tanzania.get(reg).districts.get(dist).wards.get(ward)
-    post_code = get_postcode(payload, 'ward_post_code')
-    streets = list(payload.streets)
-    return jsonify({"post_code": post_code, "streets": streets})
+    try:
+        payload = tanzania.get(reg).districts.get(dist).wards.get(ward)
+        post_code = get_postcode(payload, 'ward_post_code')
+        streets = list(payload.streets)
+        return jsonify({"post_code": post_code, "streets": streets})
+    except Exception as bug:
+        print(bug)
+        return jsonify({})
 
 
 @app.get('/api/tanzania/<region>/<district>/<ward>/<street>')
@@ -85,6 +95,17 @@ def streets(region: str, district: str, ward: str, street: str) -> Dict:
     dist: str = district.lower().capitalize()
     ward: str = ward.lower().capitalize()
     temp: str = street.lower().capitalize()
-    payload = tanzania.get(reg).districts.get(
-        dist).wards.get(ward).streets.get(temp)
-    return jsonify({"more": payload})
+    try:
+        payload = tanzania.get(reg).districts.get(
+            dist).wards.get(ward).streets.get(temp)
+        return jsonify({"more": payload})
+    except Exception as bug:
+        print(bug)
+        return jsonify({})
+
+
+@app.errorhandler(404)
+def handle_404(error_message):
+    return jsonify({
+        'response': str(error_message)
+    }), 404

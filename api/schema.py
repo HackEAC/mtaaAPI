@@ -23,7 +23,7 @@ class Region(ObjectType):
 
 class Tanzania(ObjectType):
     names = List(String)
-    regions = list(tanzania)
+    regions = List(tanzania)
 
     def resolve_names(root, info):
         return root.regions

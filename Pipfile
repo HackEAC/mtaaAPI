@@ -8,10 +8,8 @@ flask = "*"
 mtaa = "*"
 flask-cors = "*"
 flask-graphql = "*"
-graphene = ">=2.0"
+graphene = "*"
 gunicorn = "*"
-markdown = "*"
-pygments = "*"
 
 [dev-packages]
 

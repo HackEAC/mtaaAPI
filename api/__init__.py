@@ -12,25 +12,19 @@ def create_app():
 
     CORS(app)
 
-    from api.schema import schema
-    # Optional, for adding batch query support (used in Apollo-Client)
-    app.add_url_rule(
-        '/api/graphql',
-        view_func=GraphQLView.as_view(
-            'graphql',
-            schema=schema,
-            graphql_schema=schema,
-            graphiql=True,
-            batch=True
-        )
-    )
-
-    # system('rm static/*.css')
-    # system('mv templates/README.html templates/index.html')
-
-    # system('generate-md --layout jasonm23-dark --input README.md --output templates')
-    # system('mv templates/assets/* static/')
-    # system('rm -rf templates/assets')
+    # Temporarily commenting out GraphQL till I can get it to work again
+    # from api.schema import schema
+    # # Optional, for adding batch query support (used in Apollo-Client)
+    # app.add_url_rule(
+    #     '/api/graphql',
+    #     view_func=GraphQLView.as_view(
+    #         'graphql',
+    #         schema=schema,
+    #         graphql_schema=schema,
+    #         graphiql=True,
+    #         batch=True
+    #     )
+    # )
     
     with app.app_context():
         from . import routes

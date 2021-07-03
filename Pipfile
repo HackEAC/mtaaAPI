@@ -13,5 +13,9 @@ gunicorn = "*"
 
 [dev-packages]
 
+[scripts]
+dev = "env FLASK_APP=wsgi env FLASK_ENV=development flask run"
+# prod = "env FLASK_APP=wsgi env FLASK_ENV=production gunicorn --bind 0.0.0.0:5000 -w 8 wsgi:app --timeout 10000"
+
 [requires]
 python_version = "3.8"

@@ -1,5 +1,6 @@
 from graphene import ObjectType, String, Schema, List, NonNull, Field
 from mtaa import tanzania
+import mtaa
 
 
 class Street(ObjectType):
@@ -22,17 +23,28 @@ class Region(ObjectType):
 
 
 class Tanzania(ObjectType):
-    names = List(String)
-    regions = List(tanzania)
+    regions = List(String)
+    districts = List(String)
+    wards = List(String)
+    streets = List(String)
 
-    def resolve_names(root, info):
-        return root.regions
+    def resolve_regions(root, info):
+        return mtaa.regions
+
+    def resolve_districts(root, info):
+        return mtaa.districts
+
+    def resolve_wards(root, info):
+        return mtaa.wards
+
+    def resolve_streets(root, info):
+        return mtaa.streets
 
 
 class Query(ObjectType):
     hello = String(
         required=True,
-        name=String(default_value='World')
+        #  name=String(default_value='World')
     )
     tanzania = Field(Tanzania)
 
@@ -41,4 +53,3 @@ class Query(ObjectType):
 
 
 schema = Schema(query=Query)
-# schema = Schema(query=Tanzania)

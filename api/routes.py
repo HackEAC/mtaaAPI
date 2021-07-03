@@ -1,6 +1,6 @@
 import mtaa
 from flask import current_app as app
-from flask import jsonify, render_template
+from flask import jsonify, render_template, redirect
 from mtaa import tanzania
 from typing import Dict
 
@@ -19,12 +19,12 @@ def get_postcode(payload, level):
 
 @app.get('/')
 def home():
-    return render_template('README.html')
-
-
-@app.get('/api')
-def api():
     return render_template('index.html')
+
+
+@app.get('/docs')
+def api():
+    return redirect("https://app.swaggerhub.com/apis/Kalebu/mtaa-api_documentation/1.0")
 
 
 @app.get('/api/all/<level>')
@@ -41,11 +41,11 @@ def tanzan():
 
 
 @app.get('/api/tanzania/<region>')
-def regions(region: str) -> Dict:
+def regions(reg: str) -> Dict:
     """
     Returns a list of all the districts in the given Region and the region's post code
     """
-    region: str = region.lower().capitalize()
+    region: str = reg.lower().capitalize()
     payload = tanzania.get(region)
     if not payload:
         return jsonify({})

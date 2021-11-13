@@ -30,4 +30,4 @@ I hope you will find it useful.
 
 ## Guide
 
-For examples and more, documentation coming soon... <!-- you can visit https://mtaa-api.herokuapp.com -->
+For examples and more, documentation  you can visit https://mtaa-api.herokuapp.com/docs

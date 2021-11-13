@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "docusaurus-plugin-openapi": "^0.0.16"
+  }
+}

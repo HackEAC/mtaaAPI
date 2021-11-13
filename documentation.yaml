@@ -1,0 +1,40 @@
+swagger: "2.0"
+info:
+  description: |
+    Mtaa API Documentation , Mtaa api is an api for 
+    accessing easy accessing locations across tanzania
+    from regions to streets.
+
+    The source code can be found at [mtaaAPI](https://github.com/HackEAC/mtaaAPI)
+  version: 1.5
+  title: mtaaAPI
+  contact:
+    email: kalebjordan.kj@gmail.com
+  license:
+    name: MIT
+    url: https://github.com/HackEAC/mtaaAPI/blob/main/LICENSE
+
+paths:
+  /api/tanzania:
+    get:
+      summary: Return all regions in a country (Tanzania)
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          examples:
+            application/json:
+              { "regions": ["Shinyanga", "Mara", "....", "Tabora", "Dodoma"] }
+  /api/tanzania/{region}:
+    get:
+      summary: Returns all districts in a specified region
+      produces:
+        - application/json
+      parameters:
+        name: region
+      responses:
+        200:
+          description: OK
+          examples:
+            application/json: {}

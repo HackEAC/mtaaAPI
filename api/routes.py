@@ -41,11 +41,11 @@ def tanzan():
 
 
 @app.get("/api/tanzania/<region>")
-def regions(reg: str) -> Dict:
+def regions(region: str) -> Dict:
     """
     Returns a list of all the districts in the given Region and the region's post code
     """
-    region: str = reg.lower().capitalize()
+    region: str = region.lower().capitalize()
     payload = tanzania.get(region)
     if not payload:
         return jsonify({})
